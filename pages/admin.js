@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
 import Link from 'next/link';
 import { useState } from 'react';
-import { useWalletContext } from './walletcontext';
+import { useWalletContext } from '../context/walletcontext';
 import { FiHome } from 'react-icons/fi';
 
 export default function Admin() {

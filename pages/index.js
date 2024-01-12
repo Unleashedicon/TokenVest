@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Web3Modal from "web3modal";
 import Web3 from 'web3';
 import { ethers } from "ethers";
-import { useWalletContext } from './walletcontext';
+import { useWalletContext } from '../context/walletcontext';
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { useEffect, useState } from 'react';
 

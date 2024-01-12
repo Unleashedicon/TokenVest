@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 // react hooks for setting and changing states of variables
 import { useEffect, useState } from 'react';
-import { useWalletContext } from './walletcontext';
+import { useWalletContext } from '../context/walletcontext';
 import { FiHome } from 'react-icons/fi';
 export default function User() {
     const contractAddress = process.env.CONTRACT_ADDRESS2

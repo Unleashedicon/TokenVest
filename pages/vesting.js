@@ -3,7 +3,7 @@ import Link from 'next/link';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useEffect, useState } from 'react';
-import { useWalletContext } from './walletcontext';
+import { useWalletContext } from '../context/walletcontext';
 import { FiHome } from 'react-icons/fi';
 
 export default function Vest() {
