@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
+  swcMinify: false,
   env: {
     CONTRACT_ADDRESS:"0x3F5E1ab7784702577B26CE920a0e1bE7d3eF36AB",
     CONTRACT_ADDRESS2:"0x08780e8dC40502272e0335DB503752BC07aE3dAa",
