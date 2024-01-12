@@ -1,0 +1,38 @@
+{
+  "name": "storage-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@coinbase/wallet-sdk": "^3.7.2",
+    "@nomiclabs/hardhat-ethers": "^2.2.3",
+    "@nomiclabs/hardhat-waffle": "^2.0.6",
+    "@openzeppelin/contracts": "^5.0.1",
+    "@walletconnect/web3-provider": "^1.8.0",
+    "axios": "^1.2.1",
+    "chai": "^4.3.10",
+    "dotenv": "^16.3.1",
+    "ethereum-waffle": "^4.0.10",
+    "ethers": "^5.7.2",
+    "next": "13.0.6",
+    "react": "^18.2.0",
+    "react-datepicker": "^4.25.0",
+    "react-dom": "18.2.0",
+    "react-icons": "^4.12.0",
+    "wagmi": "^1.4.12",
+    "web3": "^4.3.0",
+    "web3modal": "^1.9.10"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.13",
+    "eslint": "8.29.0",
+    "eslint-config-next": "13.0.6",
+    "postcss": "^8.4.20",
+    "tailwindcss": "^3.2.4"
+  }
+}
