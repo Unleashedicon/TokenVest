@@ -97,7 +97,7 @@ Testnet Usage: Recommendation and provision for testing the DApp on a testnet en
 <!-- LIVE DEMO -->
 
 ## 🚀 Live Demo 
-<br><br><a name="live-demo">[live link](https://token-vest-vdfp-2ib7mkb15-unleashedicons-projects.vercel.app/)</a>
+<br><br><a name="live-demo">[live link](https://token-vest.vercel.app/)</a>
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
