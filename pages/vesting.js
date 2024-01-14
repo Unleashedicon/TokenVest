@@ -9,6 +9,7 @@ import { FiHome } from 'react-icons/fi';
 export default function Vest() {
   const contractAddress = process.env.CONTRACT_ADDRESS2
   const abi = process.env.ABI2
+  const abied = process.env.ABI3
 
   const [stakeholders, setStakeholders] = useState([]);
   const [whitelistedAddresses, setWhitelistedAddresses] = useState([]);
@@ -23,7 +24,7 @@ export default function Vest() {
   const [registrationStatused, setRegistrationStatused] = useState(null);
   const [registrationPendings, setRegistrationPendings] = useState(false);
   const [registrationPending, setRegistrationPending] = useState(false);
-  const { walletAddress, providers, setorganisationaddress, organizationaddress, organisationName } = useWalletContext();
+  const { walletAddress, providers, TokenContract } = useWalletContext();
   const [durationValue, setDurationValue] = useState('');
   const [durationUnit, setDurationUnit] = useState('seconds');
   const convertToUnixTimestamp = (date) => {
@@ -136,7 +137,7 @@ switch (unit) {
       }
       setRegistrationPendings(true);
       const smartContract = new ethers.Contract(contractAddress, abi, signers);
-      const tx = await smartContract.addVestingSchedule(addressToAdd, startTimeStamp , durationInSeconds, initialAmount, StakeholderType);
+      const tx = await smartContract.addVestingSchedule(addressToAdd, startTimeStamp , durationInSeconds, initialAmount, StakeholderType, { gasLimit: 100000 });
       await tx.wait();
 
       fetchStakeholders();
@@ -209,7 +210,10 @@ switch (unit) {
       const smartContract = new ethers.Contract(contractAddress, abi, signers);
       const tx = await smartContract.whitelistAddress(addressAdd);
       await tx.wait();
-
+      const claimableTokens = await smartContract.claimableTokens(addressAdd);
+      const tokenContract = new ethers.Contract(TokenContract, abied, signers);
+      const approveTx = await tokenContract.approve(addressAdd, claimableTokens, { gasLimit: 100000 });
+      await approveTx.wait();
       fetchWhitelistedAddresses();
     
       setRegistrationStatused({
