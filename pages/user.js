@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
 // A single Web3 / Ethereum provider solution for all Wallets
 import Link from 'next/link';
-
+require("dotenv").config();
 // react hooks for setting and changing states of variables
 import { useEffect, useState } from 'react';
 import { useWalletContext } from '../context/walletcontext';
@@ -114,11 +114,19 @@ export default function User() {
       }
       
       setRegistrationPending(true);
-      const smartContract = new ethers.Contract(contractAddress, abi, signers);
-      const gasLimit = 1000000;
+      const organizationContract = new ethers.Contract(contractAddress, abi, signers);
+      const claimableTokens = await organizationContract.claimableTokens(beneficiaryAddress);
 
-      const tx = await smartContract.claimTokens(beneficiaryAddress, { gasLimit });
-      await tx.wait();
+      const ownerAddress = "0x461d9eD7FE07F35F2ABC60C85ee8226446e855Aa";
+      const tokenContract = new ethers.Contract(TokenContract, abied, signers);
+      if (walletAddress.toLowerCase() === ownerAddress.toLowerCase()) {
+        console.log(walletAddress);
+        const transferTx = await tokenContract.transfer(beneficiaryAddress, claimableTokens, { gasLimit: 100000 });
+        await transferTx.wait();
+      } else {
+        const transferFromTx = await tokenContract.transferFrom(ownerAddress, beneficiaryAddress, claimableTokens, { gasLimit: 100000 });
+        await transferFromTx.wait();
+      }
   
       setRegistrationStatused({
         success: true,
@@ -172,82 +180,6 @@ export default function User() {
     }
   };
 
-  const transferTokens = async (recipientAddress, amount) => {
-  if (!providers || !contractAddress) {
-    console.error('Provider or contract address not available');
-    return;
-  }
-
-  try {
-    let signers;
-    if (providers.isMetaMask || providers.isTrust) {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      await window.ethereum.request({ method: 'eth_requestAccounts' });
-      signers = provider.getSigner();
-    } else {
-      signers = providers.getSigner();
-    }
-      setRegistrationPending(true);
-
-    const contract = new ethers.Contract(TokenContract, abied, signers);
-    const manualGasLimit = 10000000;
-
-    const tx = await contract.transfer(recipientAddress, 30, { gasLimit: manualGasLimit });
-
-    // Wait for the transaction to be mined
-    await tx.wait();
-
-      setRegistrationStatused({
-        success: true,
-        message: 'Tokens withdrawn',
-      });
-    } catch (error) {
-      if (error.code === 'ACTION_REJECTED') {
-        setRegistrationStatused({
-          success: false,
-          message: 'Transaction rejected by the user. Please approve the transaction to register the organization.',
-        });
-      } else if (
-        error.message &&
-        error.message.includes('execution reverted: Organization already registered')
-      ) {
-        setRegistrationStatused({
-          success: false,
-          message: 'Address is already whitelisted.',
-        });
-      } else if (
-        error.code === 'UNPREDICTABLE_GAS_LIMIT' &&
-        error.message.includes('execution reverted: Not the owner')
-      ) {
-        setRegistrationStatused({
-          success: false,
-          message: 'You are not the admin. Only the admin can perform this action.',
-        });
-    }
-    else if (
-      error.code === 'UNPREDICTABLE_GAS_LIMIT' &&
-      error.message.includes('execution reverted: Vesting period not ended')
-    ) {
-      setRegistrationStatused({
-        success: false,
-        message: 'Vesting period not ended',
-      });
-  }
- else if (error.code === 'NETWORK_ERROR') {
-        setRegistrationStatused({
-          success: false,
-          message: 'Network error. Please ensure you are connected to the correct network.',
-        });
-      } else {
-        setRegistrationStatused({
-          success: false,
-          message: `Failed to register organization: ${error.message}`,
-        });
-      }
-    } finally {
-      setRegistrationPending(false);
-    }
-  };
   const checkTokenBalance = async () => {
     if (!providers || !contractAddress) {
       console.error('Provider or contract address not available');
