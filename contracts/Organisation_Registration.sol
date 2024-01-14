@@ -63,18 +63,6 @@ contract OrganizationRegistration {
         
         return organizationToken.balanceOf(organizationAddress); // Adjust here
     }
-
-    function transferTokens(address organizationAddress, address to, uint256 value) external {
-        Organization storage org = organizations[organizationAddress];
-        require(org.orgAddress != address(0), "Organization not found");
-
-
-        uint balance = organizationToken.balanceOf(organizationAddress);
-        console.log(balance);
-        require(organizationToken.balanceOf(organizationAddress) >= value, "Insufficient balance");
-
-        organizationToken.transfer(to, value);
-    }
 }
 
 

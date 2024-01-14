@@ -148,21 +148,13 @@ contract StakeholderManagement {
         delete organizationVestingSchedules[_organizationAddress][_beneficiary];
     }
 
-    function claimTokens(address beneficiaryAddress) external hasVestingSchedule(beneficiaryAddress) {
-        require(msg.sender == owner || whitelistedAddresses[owner][beneficiaryAddress], "Not authorized to claim tokens");
-        
-        VestingSchedule storage vesting = organizationVestingSchedules[owner][beneficiaryAddress];
-        require(block.timestamp >= vesting.endVestingTime, "Vesting period not ended");
-        
-        uint256 claimableTokens = calculateClaimableTokens(vesting.initialAmount, vesting.endVestingTime, vesting);
-        require(claimableTokens > 0, "No tokens to claim");
-
-        uint256 balance = organizationRegistrationContract.getTokenBalance(owner);
-        console.log(balance);
-        require(balance >= claimableTokens, "Insufficient token balance in contract");
-
-        organizationRegistrationContract.transferTokens(owner, beneficiaryAddress, claimableTokens);
-
+    function claimableTokens(address beneficiaryAddress) external view hasVestingSchedule(beneficiaryAddress) returns (uint256) {
+    require(msg.sender == owner || whitelistedAddresses[owner][beneficiaryAddress], "Not authorized to claim tokens");
+    
+    VestingSchedule storage vesting = organizationVestingSchedules[owner][beneficiaryAddress];
+    require(block.timestamp >= vesting.endVestingTime, "Vesting period not ended");
+    
+    return calculateClaimableTokens(vesting.initialAmount, vesting.endVestingTime, vesting);
     }
 
     function calculateClaimableTokens(uint256 initialAmount, uint256 endVestingTime, VestingSchedule storage vesting) internal view returns (uint256) {
@@ -174,4 +166,5 @@ contract StakeholderManagement {
             return (initialAmount * timePassed) / totalVestingTime;
         }
     }
+
 }
