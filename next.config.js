@@ -3,8 +3,9 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: false,
   env: {
-    CONTRACT_ADDRESS:"0x3F5E1ab7784702577B26CE920a0e1bE7d3eF36AB",
-    CONTRACT_ADDRESS2:"0x08780e8dC40502272e0335DB503752BC07aE3dAa",
+    CONTRACT_ADDRESS:"0xaD2b2376BfFcC49cB11D541E5cAe0E8D3b3eD38E",
+    CONTRACT_ADDRESS2:"0xcad71cA34e801E19e9BeDE27c3C9B38f0BFB291E",
+    CONTRACT_ADDRESS3:"0x7fb31c05B41E10c3c4f05eEe7d3401fDb96b3f40",
     ABI: [
       {
         "inputs": [
@@ -205,29 +206,6 @@ const nextConfig = {
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "organizationAddress",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "to",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "value",
-            "type": "uint256"
-          }
-        ],
-        "name": "transferTokens",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
       }
     ],
     ABI2:[
@@ -351,9 +329,15 @@ const nextConfig = {
             "type": "address"
           }
         ],
-        "name": "claimTokens",
-        "outputs": [],
-        "stateMutability": "nonpayable",
+        "name": "claimableTokens",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
         "type": "function"
       },
       {
