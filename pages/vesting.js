@@ -137,7 +137,7 @@ switch (unit) {
       }
       setRegistrationPendings(true);
       const smartContract = new ethers.Contract(contractAddress, abi, signers);
-      const tx = await smartContract.addVestingSchedule(addressToAdd, startTimeStamp , durationInSeconds, initialAmount, StakeholderType, { gasLimit: 100000 });
+      const tx = await smartContract.addVestingSchedule(addressToAdd, startTimeStamp , durationInSeconds, initialAmount, StakeholderType);
       await tx.wait();
 
       fetchStakeholders();
